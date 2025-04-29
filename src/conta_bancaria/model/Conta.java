@@ -52,10 +52,6 @@ public class Conta {
                 Número da Âgencia : %d
                 Número da Conta : %d
                 Saldo da Conta : %s
-                *************************************
-                
-                
-               
                 """,
         this.titular, tipo, this.agencia, this.numero, nfMoeda.format(this.saldo));
     }

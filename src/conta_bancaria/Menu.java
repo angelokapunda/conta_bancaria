@@ -1,10 +1,25 @@
 package conta_bancaria;
 
+import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
 
     public static void main(String[] args) {
+
+
+        ContaCorrente contaCorrente = new ContaCorrente(
+                0001, 2342, 2000, 1, "Angelo dos Santo", 1000);
+
+        contaCorrente.visualizar();
+
+        contaCorrente.sacar(3001);
+        contaCorrente.visualizar();
+
+        ContaPoupanca contaPoupanca = new ContaPoupanca(
+                0001, 2342, 2000, 1, "Angelo dos Santo", 5);
+        contaPoupanca.visualizar();
 
         System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND +
                 """
