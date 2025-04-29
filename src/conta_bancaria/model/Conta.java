@@ -3,7 +3,7 @@ package conta_bancaria.model;
 import conta_bancaria.util.Cores;
 import java.text.NumberFormat;
 
-public class Conta {
+public abstract class Conta {
 
     private String titular;
     private int numero;
