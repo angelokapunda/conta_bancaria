@@ -1,6 +1,7 @@
 package conta_bancaria.model;
 
 import conta_bancaria.util.Cores;
+
 import java.text.NumberFormat;
 
 public abstract class Conta {
@@ -19,7 +20,7 @@ public abstract class Conta {
         this.titular = titular;
     }
 
-    public boolean sacar ( float valor) {
+    public boolean sacar(float valor) {
         if (this.saldo < valor) {
             System.out.println("O Saldo é insuficiente");
             return false;
@@ -38,22 +39,22 @@ public abstract class Conta {
 
         switch (this.tipo) {
             case 1 -> tipo = "Conta Corrente";
-            case  2 -> tipo = "Conta Poupança";
+            case 2 -> tipo = "Conta Poupança";
             default -> tipo = "Inválido";
         }
         System.out.printf(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND +
-                """ 
-                
-                *************************************
-                DADOS DA CONTA
-                *************************************
-                Nome do Titular : %s
-                Tipo da Conta : %s
-                Número da Âgencia : %d
-                Número da Conta : %d
-                Saldo da Conta : %s
-                """,
-        this.titular, tipo, this.agencia, this.numero, nfMoeda.format(this.saldo));
+                        """ 
+                                                
+                                *************************************
+                                DADOS DA CONTA
+                                *************************************
+                                Nome do Titular : %s
+                                Tipo da Conta : %s
+                                Número da Âgencia : %d
+                                Número da Conta : %d
+                                Saldo da Conta : %s
+                                """,
+                this.titular, tipo, this.agencia, this.numero, nfMoeda.format(this.saldo));
     }
 
 
