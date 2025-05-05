@@ -20,8 +20,8 @@ public class Menu {
 
         ContaController contas = new ContaController();
 
-        int opcao, numero, agencia, tipo, aniversario;
-        float saldo, limite;
+        int opcao, numero, agencia, tipo, aniversario, numeroDestino;
+        float saldo, limite, valor;
         String titular;
 
         ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 1, 2000, 1, "Angelo dos Santos", 1000);
@@ -144,7 +144,7 @@ public class Menu {
                             }
 
                         } else {
-                            System.out.printf("a conta número %d não existe " ,numero );
+                            System.out.printf("a conta número %d não existe ", numero);
                         }
                         keyPress();
                         break;
@@ -156,19 +156,44 @@ public class Menu {
                         keyPress();
                         break;
                     case 6:
-                        System.out.println("");
+                        System.out.println("Sacar");
+                        System.out.println("Digite o número da conta");
+                        numero = scanner.nextInt();
+
+                        System.out.println("Digite o valor que deseja sacar");
+                        valor = scanner.nextFloat();
+
+                        contas.sacar(numero, valor);
                         keyPress();
                         break;
                     case 7:
-                        System.out.println("");
+                        System.out.println("Depoitar");
+                        System.out.println("Digite o número da conta");
+                        numero = scanner.nextInt();
+
+                        System.out.println("Digite o valor do deposito");
+                        valor = scanner.nextFloat();
+
+                        contas.depositar(numero, valor);
                         keyPress();
                         break;
                     case 8:
-                        System.out.println("");
+                        System.out.println("Transferencia");
+
+                        System.out.println("Digite o número da conta de origem");
+                        int numeroOrigem = scanner.nextInt();
+
+                        System.out.println("Digite o número da conta de destino");
+                        numeroDestino = scanner.nextInt();
+
+                        System.out.println("Digite o valor que desaja transferir!");
+                        valor = scanner.nextFloat();
+
+                        contas.transferir(numeroOrigem, numeroDestino, valor);
                         keyPress();
                         break;
                     default:
-                        System.out.println("");
+                        System.out.println("Inválido");
                         keyPress();
                         break;
                 }
