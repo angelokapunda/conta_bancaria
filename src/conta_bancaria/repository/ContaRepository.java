@@ -20,4 +20,6 @@ public interface ContaRepository {
 
     void transferir(int contaOrigem, int contaDestino, float valor);
 
+    void listarPorTitular(String titular);
+
 }

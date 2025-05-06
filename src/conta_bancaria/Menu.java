@@ -26,7 +26,7 @@ public class Menu {
 
         ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 1, 2000, 1, "Angelo dos Santos", 1000);
         contas.cadastrar(cc1);
-        ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 2, 2000, 2, "Angelo dos Santos", 1);
+        ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 2, 2000, 2, "Ana dos Santos", 1);
         contas.cadastrar(cp1);
 
         while (true) {
@@ -46,7 +46,8 @@ public class Menu {
                                         6 - Sacar
                                         7 - Depositar
                                         8 - Tranferir valores entre Contas
-                                        9 - Sair
+                                        9 - Listar Contas Por Titular
+                                        0 - Sair
                                             
                             *******************************************************
                             Entre com a opção desejada :
@@ -56,7 +57,7 @@ public class Menu {
             try {
                 opcao = scanner.nextInt();
 
-                if (opcao == 9) {
+                if (opcao == 0) {
                     sobre();
                     System.exit(0);
                 }
@@ -190,6 +191,14 @@ public class Menu {
                         valor = scanner.nextFloat();
 
                         contas.transferir(numeroOrigem, numeroDestino, valor);
+                        keyPress();
+                        break;
+                    case 9 :
+                        System.out.println("Consultar Contar por Titular");
+                        scanner.skip("\\R");
+                        System.out.println("Digite o nome do Titular");
+                        titular = scanner.nextLine();
+                        contas.listarPorTitular(titular);
                         keyPress();
                         break;
                     default:
