@@ -2,12 +2,14 @@ package conta_bancaria;
 
 import conta_bancaria.controller.ContaController;
 import conta_bancaria.exception.ContaException;
+import conta_bancaria.model.Conta;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,9 +24,9 @@ public class Menu {
         float saldo, limite;
         String titular;
 
-        ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 1322, 2000, 1, "Angelo dos Santos", 1000);
+        ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 1, 2000, 1, "Angelo dos Santos", 1000);
         contas.cadastrar(cc1);
-        ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 1354, 2000, 2, "Angelo dos Santos", 1);
+        ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 2, 2000, 2, "Angelo dos Santos", 1);
         contas.cadastrar(cp1);
 
         while (true) {
@@ -107,11 +109,50 @@ public class Menu {
                         keyPress();
                         break;
                     case 4:
-                        System.out.println("");
+                        System.out.println("Atualizar conta");
+                        System.out.println("Digite o número da conta");
+                        numero = scanner.nextInt();
+                        Optional<Conta> conta = contas.buscarNaCollection(numero);
+                        if (conta.isPresent()) {
+
+                            System.out.println("Digite o número da agencia");
+                            agencia = scanner.nextInt();
+                            scanner.skip("\\R");
+
+                            System.out.println("Digite o nome do Titular");
+                            titular = scanner.nextLine();
+
+                            tipo = conta.get().getTipo();
+
+                            System.out.println("Digite o novo " +
+                                    "saldo da conta");
+                            saldo = scanner.nextFloat();
+
+                            switch (tipo) {
+                                case 1 -> {
+                                    System.out.println("Digite o limite da Conta");
+                                    limite = scanner.nextFloat();
+                                    contas.atualizar(new ContaCorrente(agencia, numero, saldo, tipo, titular, limite));
+                                }
+                                case 2 -> {
+                                    System.out.println("Digite o Aniversário da Conta");
+                                    aniversario = scanner.nextInt();
+                                    contas.atualizar(new ContaPoupanca(agencia, numero, saldo, tipo, titular, aniversario));
+                                }
+                                default -> System.out.println(Cores.TEXT_RED_BOLD +
+                                        "Click 1 - CC ou 2 - CP, a opção de número " + tipo + " que foi digitada por vc é inválida. Tente novamente ...Obrigado!");
+                            }
+
+                        } else {
+                            System.out.printf("a conta número %d não existe " ,numero );
+                        }
                         keyPress();
                         break;
                     case 5:
-                        System.out.println("");
+                        System.out.println("Apagar Conta");
+                        System.out.println("Digite o número da conta");
+                        numero = scanner.nextInt();
+                        contas.deletar(numero);
                         keyPress();
                         break;
                     case 6:
