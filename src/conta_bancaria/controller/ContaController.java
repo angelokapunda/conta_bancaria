@@ -4,6 +4,7 @@ import conta_bancaria.model.Conta;
 import conta_bancaria.repository.ContaRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ContaController implements ContaRepository {
@@ -28,6 +29,20 @@ public class ContaController implements ContaRepository {
         for (var conta : listaContas) {
             conta.visualizar();
         }
+    }
+
+    @Override
+    public void listarPorTitular(String titular) {
+        List<Conta> listaTitulares = listaContas.stream()
+                .filter(c -> c.getTitular().toUpperCase().contains(titular.toUpperCase()))
+                .toList();
+        if (listaTitulares.isEmpty()) {
+            System.out.println("Nenhuma Conta foi encontrada com base no critério " + titular);
+        }
+        for (var conta : listaTitulares) {
+            conta.visualizar();
+        }
+
     }
 
     @Override
@@ -63,16 +78,45 @@ public class ContaController implements ContaRepository {
 
     @Override
     public void sacar(int numero, float valor) {
+        Optional<Conta> conta = buscarNaCollection(numero);
 
+        if (conta.isPresent()) {
+            if (conta.get().sacar(valor)) {
+                System.out.printf("O Saque no valor de %f foi efectuado com sucesso na conta %d",
+                        valor, numero);
+            }
+        } else {
+            System.out.printf("A Conta de número %d não foi encontrada ", numero);
+        }
     }
 
     @Override
     public void depositar(int numero, float valor) {
+        Optional<Conta> conta = buscarNaCollection(numero);
+
+        if (conta.isPresent()) {
+            conta.get().depositar(valor);
+            System.out.printf("O deposito no valor de %f foi efectualdo com sucesso na conta %d",
+                    valor, numero);
+        } else {
+            System.out.printf("A Conta de número %d não foi encontrada ", numero);
+        }
     }
 
     @Override
-    public void transferir(int contaOrigem, int contaDestino, float valor) {
+    public void transferir(int numeroOrigem, int numeroDestino, float valor) {
+        Optional<Conta> contaOrigem = buscarNaCollection(numeroOrigem);
+        Optional<Conta> contaDestino = buscarNaCollection(numeroDestino);
 
+        if (contaOrigem.isPresent() && contaDestino.isPresent()) {
+            if (contaOrigem.get().sacar(valor)) {
+                contaDestino.get().depositar(valor);
+                System.out.printf("A transferencia  no valor de %f da conta %d para a conta %d foi efectuado com sucesso ",
+                        valor, numeroOrigem, numeroDestino);
+            }
+        } else {
+            System.out.printf("A Conta de número %d não foi encontrada ", numeroOrigem);
+        }
     }
 
     public int gerarNumero() {
